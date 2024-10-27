@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+      - "DatabaseSettings:DatabaseName=CatalogDb"
+      - "DatabaseSettings:CollectionName=Products"
+      - "DatabaseSettings:CollectionName=Brands"
+      - "DatabaseSettings:CollectionName=Types"
+      - "ElasticSearchSettings:Uri=http://elasticsearch:9200"
+    ports:
+      - "8000:80"
