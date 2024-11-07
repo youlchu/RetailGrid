@@ -41,12 +41,12 @@ builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Microsoft.OpenApi.M
 //Register AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-    //Register Mediatr
-    var assemblies = new Assembly[]
-    {
-        Assembly.GetExecutingAssembly(),
-        typeof(GetAllBrandsHandler).Assembly
-    };
+//Register Mediatr
+var assemblies = new Assembly[]
+{
+    Assembly.GetExecutingAssembly(),
+    typeof(GetAllBrandsHandler).Assembly
+};
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
 

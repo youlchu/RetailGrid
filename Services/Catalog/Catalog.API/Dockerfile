@@ -20,6 +20,8 @@ RUN dotnet build "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+#COPY ./Data/SeedData/brands.json /app/Data/SeedData/brands.json
+#COPY ../Catalog.Infrastructure/Data/SeedData/brands.json /app/Data/SeedData/brands.json
 
 FROM base AS final
 WORKDIR /app

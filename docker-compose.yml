@@ -9,6 +9,8 @@ services:
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
+    volumes:
+      - ./Data/SeedData:/app/Data/SeedData
  
 volumes:
    mongo_data:
