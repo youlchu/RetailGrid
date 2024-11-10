@@ -49,28 +49,28 @@ namespace Basket.API.Controllers
             return Ok(await _mediator.Send(cmd));
         }
         
-        [Route("[action]")]
-        [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
-        {
-            //Get the existing basket with username
-            var query = new GetBasketByUserNameQuery(basketCheckout.UserName);
-            var basket = await _mediator.Send(query);
-            if(basket == null)
-            {
-                return BadRequest();
-            }
+        //[Route("[action]")]
+        //[HttpPost]
+        //[ProducesResponseType((int)HttpStatusCode.Accepted)]
+        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        //public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+        //{
+        //    //Get the existing basket with username
+        //    var query = new GetBasketByUserNameQuery(basketCheckout.UserName);
+        //    var basket = await _mediator.Send(query);
+        //    if(basket == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var eventMsg = BasketMapper.Mapper.Map<BasketCheckoutEvent>(basketCheckout);
-            eventMsg.TotalPrice = basket.TotalPrice;
-            await _publishEndpoint.Publish(eventMsg);
-            _logger.LogInformation($"Basket Published for {basket.UserName}");
-            //remove the basket
-            var deleteCmd = new DeleteBasketByUserNameCommand(basketCheckout.UserName);
-            await _mediator.Send(deleteCmd);
-            return Accepted();
-        }
+        //    var eventMsg = BasketMapper.Mapper.Map<BasketCheckoutEvent>(basketCheckout);
+        //    eventMsg.TotalPrice = basket.TotalPrice;
+        //    await _publishEndpoint.Publish(eventMsg);
+        //    _logger.LogInformation($"Basket Published for {basket.UserName}");
+        //    //remove the basket
+        //    var deleteCmd = new DeleteBasketByUserNameCommand(basketCheckout.UserName);
+        //    await _mediator.Send(deleteCmd);
+        //    return Accepted();
+        //}
     }
 }

@@ -1,6 +1,8 @@
 using Asp.Versioning;
 using Basket.Application.Handlers;
 using Basket.Core.Repositories;
+using Basket.Infrastructure.Repository;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,8 @@ var assemblies = new Assembly[]
     typeof(CreateShoppingCartCommandHandler).Assembly
 };
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
+
 //redis 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -39,7 +43,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 
-builder.Services.AddScoped<IBasketRepository, IBasketRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
