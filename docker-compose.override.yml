@@ -35,3 +35,13 @@ services:
       - basketdb
     ports:
       - "8001:8080"
+
+  portainer:
+    container_name: Portainer
+    restart: always
+    ports:
+      - "8080:8080"
+      - "9000:9000"   
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data  
